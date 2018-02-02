@@ -1,0 +1,147 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mucv}[2018/02/01 muCV por CV creation]
+
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{%
+   family=mmu,
+   prefix=mmu@,
+   }
+\DeclareStringOption[009900]{color}
+\ProcessKeyvalOptions*
+
+\RequirePackage[applemac]{inputenc}
+\RequirePackage{tikz} %For drawing, in general
+\RequirePackage{graphicx} %To include graphics
+\usetikzlibrary{positioning}
+\RequirePackage{wasysym} %For the phone icon
+\RequirePackage[misc]{ifsym} %For the mail icon
+\RequirePackage{anysize}
+\RequirePackage[top=0.8cm,bottom=0.5cm,left=1.5cm,right=2cm]{geometry} %Adjust margins
+\RequirePackage[siunitx,european,americanresistors]{circuitikz} %To draw specific shapes with tikz
+\usepackage{xcolor} %To specify colors and so on
+
+%%%%%%% Default values and setters %%%%%%%%%%%%%%%%%
+\newcommand{\muFirstNames}{First Name}
+\newcommand{\muLastNames}{Last Name}
+\newcommand{\muAddress}{Fake Street 123, Beruna 1337, Narnia.}
+\newcommand{\muPhone}{111-111-111}
+\newcommand{\muEmail}{some-mail@somedomain.com}
+
+\newcommand{\muSetFirstNames}[1]{ \renewcommand{\muFirstNames}{#1} }
+\newcommand{\muSetLastNames}[1]{ \renewcommand{\muLastNames}{#1} }
+\newcommand{\muSetAddress}[1]{ \renewcommand{\muAddress}{#1} }
+\newcommand{\muSetPhone}[1]{ \renewcommand{\muPhone}{#1} }
+\newcommand{\muSetEmail}[1]{ \renewcommand{\muEmail}{#1} }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\sectionfont{\sffamily\LARGE}
+%Gray shades
+\definecolor{hardgray}{HTML}{626262}
+\definecolor{softgray}{HTML}{DADADA}
+\definecolor{ultrasoftgray}{HTML}{EEEEEE}
+
+%You can play with these three colours.
+\definecolor{hardCColor}{HTML}{\mmu@color} %Funny green 309000 old 009900
+\definecolor{titleColor}{HTML}{\mmu@color}
+\definecolor{linesColor}{HTML}{000000}
+
+\setcounter{secnumdepth}{0} %To number subsubsections
+%Also removes numbering
+\renewcommand\thesection{}
+
+%Redefine the circle bullets for itemize
+\newcommand{\circleBullet}{
+	\tikz{
+	\draw[hardCColor] (0,0) circle (0.12cm);
+	\node[scale=0.7,text=black] at (0.1,-0.025) {$\rightarrow$};
+	}
+}
+
+\def\labelitemi{\circleBullet}
+
+%Now the items to number stuff
+\newcommand{\muTitle}{
+\begin{center}
+\begin{tikzpicture}
+\node at (-6.75,1) (B) {\includegraphics[scale=0.36]{picture.jpg}};
+\node[inner sep=0pt,outer sep=0pt,text=black,scale=2.6,font=\sectionfont]  at (1.5,0.8) (A) {\textcolor{gray}{\muFirstNames} \textcolor{titleColor}{\muLastNames}};
+\fill[softgray](-5.1,2.2) rectangle (-5.02,-1.5);
+\fill[softgray](-8,-1.0) rectangle (8,-1.08);
+\end{tikzpicture}
+\vspace{0.0cm}
+
+\muAddress\\
+\phone \hspace{0.1cm} \muPhone, \hspace{0.1cm} \Letter \hspace{0.1cm} \muEmail
+\end{center}
+}
+
+\newcommand{\muItem}[2]{
+	\vspace{0.2cm}
+	
+	\noindent
+	\leftskip1cm
+	\tikz{
+		\node[inner sep=0pt,outer sep=0pt,text=hardCColor,scale=0.8,font=\sectionfont]  at (0,0)    {#1};
+	}\vspace{0.1cm}
+	
+	\hfill
+	\begin{minipage}{0.86\textwidth}
+	\small #2
+	\end{minipage}
+}
+
+\newcommand{\muItemU}[4]{
+	\vspace{0.2cm}
+	
+	\noindent
+	\leftskip1cm
+	\tikz{
+		\draw[linesColor,line width=0.30mm] (4,-0.55) -- (-0.2,-0.55) -- (-0.2,0.3) -- (13.2,0.3) -- (13.2,-0.18) -- (16.2,-0.18) -- (16.2,0.3);
+		\draw (16.2,0.3) circle (0.15cm);
+		\node[inner sep=0pt,outer sep=0pt,text=hardCColor,scale=0.8,font=\sectionfont, anchor=west]  at (0,0)    {#1};
+		\node[inner sep=0pt,outer sep=0pt,text=gray,scale=0.6,font=\sectionfont, anchor=west]  at (0.8,-0.35)    {#3};
+		\node[inner sep=0pt,outer sep=0pt,text=gray,scale=0.6,font=\sectionfont, anchor=east]  at (16,0)    {\textit{#2}};
+	}\vspace{0.12cm}
+	
+	\hfill
+	\begin{minipage}{0.85\textwidth}
+	\small #4
+	\end{minipage}
+}
+
+%\vspace{0.6cm} For the mu list
+\newcommand{\listDistance}{2.6}
+\newenvironment{muList}[1]{\renewcommand{\listDistance}{#1}\begin{Spacing}{0}}{\end{Spacing}}
+\newcommand{\muListI}[2]{
+	\noindent
+	\tikz{
+		\fill[ultrasoftgray](0,0.25) rectangle (16,-0.25);
+		\node[inner sep=0pt,outer sep=0pt,text=hardCColor,scale=0.7,font=\sectionfont, anchor=east]  at (\listDistance,0) {#1};
+		\node[inner sep=0pt,outer sep=0pt,text=hardgray,scale=0.7,font=\sectionfont, anchor=west]  at (\listDistance+0.2,0) {#2};
+	}
+	
+}
+
+% SECTIONS
+\def\sectionindent{3cm}
+
+\makeatletter
+\setsecheadstyle{
+	\leftskip0cm
+	\noindent
+	\tikz{
+		\fill[linesColor](0.3,0.6) rectangle (0.5,0);
+		\fill[linesColor](0.3, 0) rectangle (17.9,-0.03);
+	}
+	\vskip-6ex\hskip+0.1em\sectionfont\color{gray}
+}
+
+\def\@seccntformat#1{\hskip10em}
+\makeatother
+
+\setbeforesecskip{-0.4\onelineskip}
+\setaftersecskip{0.7\onelineskip}
+
+\AtBeginDocument{\pagenumbering{gobble}\muTitle\leftskip1cm}
+
+\AtEndDocument{\vfill\begin{center}\muFirstNames \muLastNames. \muAddress \\\phone \hspace{0.1cm} \muPhone, \hspace{0.1cm} \Letter \hspace{0.1cm} \muEmail\end{center}}

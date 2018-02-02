@@ -1,0 +1,67 @@
+\documentclass[oneside,spanish,10pt, a4paper]{memoir}
+%You can also try with letterpaper
+\usepackage[color=6c00a4]{mucv}
+%\selectcolormodel{gray} %Uncomment to look it in blanc et noir
+
+%%%%%%%%%%%%%%% Here you put your details %%%%%%%%%%%%%%%%%%%%%%%%%%
+\muSetFirstNames{First Name}
+\muSetLastNames{Last Name}
+\muSetAddress{Fake Street 123, Beruna 1337, Narnia.}
+\muSetPhone{111-111-111}
+\muSetEmail{some-mail@somedomain.com}
+%%%%%%%%%%%%%%%%%% %%%%%%%%%%%%%%%%%%%% %%%%%%%%%%%%%%%%% %%%%%%%%%%
+
+%% Note, you can do your own page break with these commands
+%\newpage
+%\newgeometry{top=1.8cm,bottom=1cm,left=1.5cm,right=2cm}
+
+\begin{document}
+
+%Example of one section
+\section{Personal Details}
+
+%The muList environment requires a width for the first field. Play with those values.
+\begin{muList}{2.4}
+\muListI{Age:}{24 years old (Jan 1, 1990)}
+\muListI{Nationality:}{I come from Narnia!}
+\muListI{Civil Status:}{Single}
+\end{muList}
+
+\section{Education}
+%The muItemU requires 4 fields, usually "Title", "Date", "Where" and a detailed description
+\muItemU{MSc in Alchemy}{1997-1999}{National Autonomous University of Narnia, \textit{Narnia}}{Skills developed in spell casting and beast taming.}
+
+%Just a filler
+\section{Scientific and Technical Skills}
+\begin{muList}{4.0}
+\muListI{Chemistry Background:}{Development of poison, acids and life potions.}
+\muListI{Physics Background:}{Electrodynamics, Mechanics, Thermodynamics and Statistical Physics.}
+\muListI{Weapon Craftsmanship:}{Swords and bows is what I can offer.}
+\muListI{Combat Skills:}{Dual shield wielding}
+\end{muList}
+
+\section{Work Experience}
+\muItemU{Aslan's Faithful Soldier}{2009}{Aslan's Country, \textit{Narnia}}{Devoted to serve the King above all High Kings.}
+
+%These are 2-field items, generally when when and where are not necessary
+\section{Other Achievements}
+\muItem{Escaped from prison in Archenland}{I wanted trial by combat, they gave me no other choice.}
+\muItem{Also escaped from Calormen}{After a 2 month imprisionment, I was able to steal the key of my cell.}
+
+\section{Languages}
+\begin{muList}{2.0}
+\muListI{Sindarin:}{Level C1}
+\muListI{Elvish:}{Level B2}
+\muListI{English:}{Native speaker.}
+\end{muList}
+
+%The normal itemize is different now.
+\section{Interests}
+\begin{itemize}
+\setlength\itemsep{-0.1cm}
+\item \small Save the world.
+\item Save lives.
+\item Bring happiness to the world.
+\end{itemize}
+
+\end{document}
